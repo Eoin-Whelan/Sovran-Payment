@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace PaymentService.Business
 {
     
-    public class PaymentAccountCreator : IAccountCreator
+    public class PaymentAccountCreator : IPaymentAccountCreator
     {
         public PaymentAccountCreator()
         {
@@ -22,7 +22,7 @@ namespace PaymentService.Business
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string CreateAccount(RegistrationRequest request)
+        public string CreateAccount(PaymentRegistrationRequest request)
         {
             StripeConfiguration.ApiKey = "sk_test_51K9bu8Dj019cdYs2M7Hi1N5YKVoh6uBQDkuP60ujyvytf6SOZ5D79TJy5vc7M3A5EcmJh6FJJEKHJtcIC5voKCOK00wn6z7kcj";
             StripeConfiguration.ClientId = "ca_KyWpw9XDq3mgjG2vRNzuYGEQFuBzqd98";

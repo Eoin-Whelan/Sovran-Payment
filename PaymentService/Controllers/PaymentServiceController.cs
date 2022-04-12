@@ -9,9 +9,9 @@ namespace PaymentService.Controllers
     public class PaymentServiceController : ControllerBase
     {
         private readonly ILogger<PaymentServiceController> _logger;
-        private readonly IAccountCreator _accountCreator;
+        private readonly IPaymentAccountCreator _accountCreator;
 
-        public PaymentServiceController(ILogger<PaymentServiceController> logger, IAccountCreator accountCreator)
+        public PaymentServiceController(ILogger<PaymentServiceController> logger, IPaymentAccountCreator accountCreator)
         {
             _logger = logger;
             _accountCreator = accountCreator;
@@ -20,7 +20,7 @@ namespace PaymentService.Controllers
 
         [Route("RegisterAccount")]
         [HttpPost]
-        public IActionResult RegisterAccount([FromBody] RegistrationRequest request)
+        public IActionResult RegisterAccount([FromBody] PaymentRegistrationRequest request)
         {
             try
             {
@@ -28,7 +28,11 @@ namespace PaymentService.Controllers
 
                 var validatorResponse = _accountCreator.CreateAccount(request);
 
-                JsonResult result = new JsonResult(validatorResponse);
+                PaymentRegistrationResponse response = new PaymentRegistrationResponse
+                {
+                    OnboardingUrl = validatorResponse
+                };
+                JsonResult result = new JsonResult(response);
                 return result;
             }
             catch (Exception ex)

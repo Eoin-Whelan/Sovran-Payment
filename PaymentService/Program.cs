@@ -11,7 +11,7 @@ builder.Services.AddSwaggerGen();
 
 
 // Dependency Injection
-builder.Services.AddScoped<IAccountCreator, PaymentAccountCreator>();
+builder.Services.AddScoped<IPaymentAccountCreator, PaymentAccountCreator>();
 
 
 var app = builder.Build();

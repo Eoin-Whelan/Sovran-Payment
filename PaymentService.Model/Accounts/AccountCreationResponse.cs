@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace PaymentService.Model.Accounts
 {
-    internal class AccountCreationResponse
+    public class PaymentRegistrationResponse
     {
+        public string OnboardingUrl { get; set; }
     }
 }
