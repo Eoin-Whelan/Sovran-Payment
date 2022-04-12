@@ -19,8 +19,9 @@ namespace PaymentService.Controllers
 
 
         [Route("RegisterAccount")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaymentRegistrationResponse))]
         [HttpPost]
-        public IActionResult RegisterAccount([FromBody] PaymentRegistrationRequest request)
+        public ActionResult<PaymentRegistrationResponse> RegisterAccount([FromBody] PaymentRegistrationRequest request)
         {
             try
             {
@@ -32,8 +33,7 @@ namespace PaymentService.Controllers
                 {
                     OnboardingUrl = validatorResponse
                 };
-                JsonResult result = new JsonResult(response);
-                return result;
+                return Ok(validatorResponse);
             }
             catch (Exception ex)
             {
