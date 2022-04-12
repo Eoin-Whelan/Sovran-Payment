@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PaymentService.Model.Accounts
 {
-    public class StripeRegistrationRequest
+    public class PaymentRegistrationRequest
     {
         [Required(ErrorMessage = "Missing Info : EmailAddress")]
         public string EmailAddress { get; set; }
