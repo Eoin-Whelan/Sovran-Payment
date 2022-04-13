@@ -9,5 +9,6 @@ namespace PaymentService.Model.Accounts
     public class PaymentRegistrationResponse
     {
         public string? OnboardingUrl { get; set; }
+        public string? StripeAccountNo { get; set; }
     }
 }

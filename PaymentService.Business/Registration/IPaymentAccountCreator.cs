@@ -4,6 +4,6 @@ namespace PaymentService.Business
 {
     public interface IPaymentAccountCreator
     {
-        public string CreateAccount(PaymentRegistrationRequest email);
+        public PaymentRegistrationResponse CreateAccount(PaymentRegistrationRequest email);
     }
 }

@@ -22,33 +22,47 @@ namespace PaymentService.Business
         /// </summary>
         /// <param name="request"></param>
         /// <returns></returns>
-        public string CreateAccount(PaymentRegistrationRequest request)
+        public PaymentRegistrationResponse CreateAccount(PaymentRegistrationRequest request)
         {
             StripeConfiguration.ApiKey = "sk_test_51K9bu8Dj019cdYs2M7Hi1N5YKVoh6uBQDkuP60ujyvytf6SOZ5D79TJy5vc7M3A5EcmJh6FJJEKHJtcIC5voKCOK00wn6z7kcj";
             StripeConfiguration.ClientId = "ca_KyWpw9XDq3mgjG2vRNzuYGEQFuBzqd98";
-            var accountOptions = new AccountCreateOptions
+            try
             {
-                Type = "standard",
-                Country = "IE",
-                Email = request.EmailAddress,
-                BusinessType = "individual"
-        };
+                var accountOptions = new AccountCreateOptions
+                {
+                    Type = "standard",
+                    Country = "IE",
+                    Email = request.EmailAddress,
+                    BusinessType = "individual"
+                };
 
-            var accountService = new AccountService();
-            var result = accountService.Create(accountOptions);
+                var accountService = new AccountService();
+                var result = accountService.Create(accountOptions);
 
 
-            var options = new AccountLinkCreateOptions
+                var options = new AccountLinkCreateOptions
+                {
+                    Account = result.Id,
+                    RefreshUrl = "https://example.com/reauth",
+                    ReturnUrl = "https://example.com/return",
+                    Type = "account_onboarding",
+                };
+                var service = new AccountLinkService();
+                var newAccount = service.Create(options);
+
+                PaymentRegistrationResponse response = new PaymentRegistrationResponse
+                {
+                    OnboardingUrl = newAccount.Url,
+                    StripeAccountNo = result.Id
+                };
+
+                return response;
+            }
+            catch (Exception ex)
             {
-                Account = result.Id,
-                RefreshUrl = "https://example.com/reauth",
-                ReturnUrl = "https://example.com/return",
-                Type = "account_onboarding",
-            };
-            var service = new AccountLinkService();
-            var accountLinkUrl = service.Create(options).Url;
+                return null;
+            }
 
-            return accountLinkUrl;
         }
     }
 }

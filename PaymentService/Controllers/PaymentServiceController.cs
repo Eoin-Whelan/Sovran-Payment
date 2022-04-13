@@ -27,12 +27,11 @@ namespace PaymentService.Controllers
             {
                 _logger.LogInformation($"Payment beginning");
 
-                var validatorResponse = _accountCreator.CreateAccount(request);
-
-                PaymentRegistrationResponse response = new PaymentRegistrationResponse
+                PaymentRegistrationResponse validatorResponse = _accountCreator.CreateAccount(request);
+                if(validatorResponse == null)
                 {
-                    OnboardingUrl = validatorResponse
-                };
+                    throw new Exception("Internal Error has occurred. Please contact system administrator.");
+                }
                 return Ok(validatorResponse);
             }
             catch (Exception ex)
