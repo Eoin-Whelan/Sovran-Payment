@@ -19,7 +19,6 @@ namespace PaymentService.Controllers
 
 
         [Route("RegisterAccount")]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaymentRegistrationResponse))]
         [HttpPost]
         public ActionResult<PaymentRegistrationResponse> RegisterAccount([FromBody] PaymentRegistrationRequest request)
         {
